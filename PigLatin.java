@@ -32,8 +32,7 @@ class FigureOutWord
  	 * 
 	 */
 	public static boolean startsVowel(String s){
-        s = s.toUpperCase();
-        if (s.substring(0, 1).equals("A") || s.substring(0, 1).equals("E") || s.substring(0, 1).equals("I") || s.substring(0, 1).equals("O") || s.substring(0, 1).equals("U")){
+        if (FigureOutWord.isVowel(s.substring(0, 1))){
             return true;
         }
         else{
@@ -41,17 +40,17 @@ class FigureOutWord
         }
     }
 	public static boolean startsConsonant(String s){
-        s = s.toUpperCase();
-        if (s.substring(0, 1).equals("A") || s.substring(0, 1).equals("E") || s.substring(0, 1).equals("I") || s.substring(0, 1).equals("O") || s.substring(0, 1).equals("U")){
-            return false;
+        if (!FigureOutWord.isVowel(s.substring(0, 1))){
+            return true;
         }
         else{
-            return true;
+            return false;
         }
     }
     public static boolean isVowel(String s){
         s = s.toUpperCase();
-        if (s.equals("A") || s.equals("E") || s.equals("I") || s.equals("O") || s.equals("U")){
+        String vowels = "AEIOU";
+        if (vowels.contains(s)){
             return true;
         }
         else{
@@ -72,7 +71,18 @@ class FigureOutWord
 			return false;
 		}
 	}
-	public static String convertWord(String s)
+	public static int numberOfStartingConsonants(String s){
+        int counter = 0;
+        int num = 0;
+        int num1 = 1;
+        while (!FigureOutWord.isVowel(s.substring(num, num1))){
+            counter += 1;
+            num += 1;
+            num1 += 1;
+        }
+        return counter;
+    }
+	/*public static String convertWord(String s)
 	{
 		if (FigureOutWord.startsConsonant(s) && FigureOutWord.startsTwoConsonants(s)){
 			return s.substring(2) + s.substring(0,2) + "ay";
@@ -84,7 +94,16 @@ class FigureOutWord
 			return s + "way";
 		}
      		 return "";      // This statement is provided to allow initial compiling.
-	}  
+	}  */
+	public static String convertWord(String s)
+    {
+        if (FigureOutWord.numberOfStartingConsonants(s) == 0){
+            return s + "way";
+        }
+        else{
+            return s.substring(FigureOutWord.numberOfStartingConsonants(s)) + s.substring(0,FigureOutWord.numberOfStartingConsonants(s)) + "ay"; 
+        }
+    }  
 	public static String convertSentence(String s)
 	{
 		int num = 0;
@@ -95,7 +114,7 @@ class FigureOutWord
 			num = num1+1;
 			num1 = s.indexOf(" ", num);
 		}
-		endingStr += FigureOutWord.convertWord(s.substring(num, s.length()-1));
+		endingStr += FigureOutWord.convertWord(s.substring(num));
 		return (endingStr);
 	}  
    

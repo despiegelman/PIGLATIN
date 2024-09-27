@@ -94,7 +94,7 @@ class FigureOutWord
             return s + "way";
         }
         else{
-            return s.substring(FigureOutWord.numberOfStartingConsonants(s)+1) + s.substring(0,FigureOutWord.numberOfStartingConsonants(s)+1) + "ay"; 
+            return s.substring(FigureOutWord.numberOfStartingConsonants(s)) + s.substring(0,FigureOutWord.numberOfStartingConsonants(s)+1) + "ay"; 
         }
     }  
     public static String convertSentence(String s)
